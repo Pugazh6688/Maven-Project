@@ -232,6 +232,9 @@ public abstract class BaseClass {
     protected static void test(){
         System.out.println("Check git by tester 1");
     }
+    protected static void test2(){
+        System.out.println("Check git by tester 1");
+    }
 
 
 
