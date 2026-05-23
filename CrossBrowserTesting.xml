@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true"
+          name="C:/Users/pugaz/IdeaProjects/MavenProject/src/test/java/com/testNGrunner/CrossBrowserTesting.java">
+        <classes>
+            <class name="com.testNGrunner.CrossBrowserTesting">
+                <methods>
+                    <include name="chrome"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

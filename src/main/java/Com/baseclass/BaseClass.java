@@ -1,5 +1,7 @@
 package Com.baseclass;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -20,6 +22,8 @@ import java.util.List;
 
 public abstract class BaseClass {
     public static WebDriver driver;
+    public static ExtentReports extendReport;
+    public static File file;
 
     //Launch Browser
     protected static WebDriver launchBrowse(String browserName) {
@@ -43,6 +47,7 @@ public abstract class BaseClass {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(seconds));
 
     }
+
     protected static void explicitWaitAlertIsPresent() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.alertIsPresent());
@@ -78,21 +83,22 @@ public abstract class BaseClass {
 
     //Acceptalert
     protected static void Acceptalert() {
-        try{
+        try {
             driver.switchTo().alert().accept();
 
-        }catch (Exception a){
+        } catch (Exception a) {
             Assert.fail("ERROR: OCCURE DURING ACCEPTALERT ");
         }
 
     }
+
     protected static void alertText() {
-        try{
+        try {
 
             String text = driver.switchTo().alert().getText();
             System.out.println(text);
 
-        }catch (Exception a){
+        } catch (Exception a) {
             Assert.fail("ERROR: OCCURE DURING GETTING TEXT FROM ALERT ");
         }
 
@@ -101,99 +107,114 @@ public abstract class BaseClass {
     //dismissAlert
     protected static void dismissAlert() {
 
-        try{
+        try {
             driver.switchTo().alert().dismiss();
-        }catch (Exception a){
+        } catch (Exception a) {
             Assert.fail("ERROR: OCCURE DURING DISMISSALERT ");
         }
     }
+
     //promptText
     protected static void promptText(String Prompt) {
-        try{
+        try {
             driver.switchTo().alert().sendKeys(Prompt);
-        }catch (Exception a){
+        } catch (Exception a) {
             Assert.fail("ERROR: OCCURE DURING PROMPTTEXT ");
         }
     }
+
     //singleSelect
     protected static void singleSelect(WebElement element, String visibleTest) {
-        try{
+        try {
             Select singleselect = new Select(element);
             singleselect.selectByVisibleText(visibleTest);
-        }catch (Exception a){
+        } catch (Exception a) {
             Assert.fail("ERROR: OCCURE DURING SINGLESELECT ");
         }
 
     }
+
     protected static void getoption(WebElement element) {
         Select allOptions = new Select(element);
-        List<WebElement> options =  allOptions.getOptions();
-        for(WebElement option: options){
+        List<WebElement> options = allOptions.getOptions();
+        for (WebElement option : options) {
             System.out.println(option.getText());
         }
     }
 
     //navigateTo
     protected static void navigateToPage(String navURL) {
+
         driver.navigate().to(navURL);
     }
 
     //back
     protected static void navigateBack() {
+
         driver.navigate().back();
     }
 
     //forward
     protected static void navigateForward() {
+
         driver.navigate().forward();
     }
 
     //refresh
     protected static void navigateRefresh() {
+
         driver.navigate().refresh();
     }
 
     //close
     protected static void closePage() {
+
         driver.close();
     }
 
     //quit
     protected static void quitPage() {
+
         driver.quit();
     }
-//mouse moveToElement
+
+    //mouse moveToElement
     protected static void mousemoveToElement(WebElement element) {
         Actions action = new Actions(driver);
         action.moveToElement(element).perform();
     }
-//mouse  ToElement Click
+
+    //mouse  ToElement Click
     protected static void mousemoveToElementClick(WebElement element) {
         Actions action = new Actions(driver);
         action.moveToElement(element).click().perform();
     }
-//dragAndDropElement
+
+    //dragAndDropElement
     protected static void dragAndDropElement(WebElement source, WebElement target) {
         Actions action = new Actions(driver);
         action.dragAndDrop(source, target).perform();
     }
-//doubleClickElement
+
+    //doubleClickElement
     protected static void doubleClickElement(WebElement element) {
         Actions action = new Actions(driver);
         action.doubleClick(element).perform();
     }
-//isEnabled
-    protected static void  isEnabledElement(WebElement fieldValue) {
 
-            Boolean field2 = fieldValue.isEnabled();
-            if (field2){
-                System.out.println("Field is enabled " + field2);
-            }else {
-                System.out.println("Field is disabled " + field2);
-            }
+    //isEnabled
+    protected static void isEnabledElement(WebElement fieldValue) {
+
+        Boolean field2 = fieldValue.isEnabled();
+        if (field2) {
+            System.out.println("Field is enabled " + field2);
+        } else {
+            System.out.println("Field is disabled " + field2);
+        }
     }
+
     //isSelected
-    protected static void  isElementSelected(WebElement option) {
+    protected static void isElementSelected(WebElement option) {
 
         Boolean value = option.isSelected();
         if (value) {
@@ -202,37 +223,55 @@ public abstract class BaseClass {
             System.out.println("Field Not Selected " + value);
         }
     }
-    protected static void  isDisplayed(WebElement fieldValue) {
+
+    protected static void isDisplayed(WebElement fieldValue) {
 
         Boolean field = fieldValue.isDisplayed();
-        if (field){
+        if (field) {
             System.out.println("is Displayed " + field);
-        }else {
+        } else {
             System.out.println("is not  Displayed " + field);
         }
     }
-    protected static void screenShot(String location)throws IOException {
+
+    protected static void screenShot(String location) throws IOException {
         try {
             Date currentDate = new Date();
             System.out.println(currentDate);
             String dateFile = currentDate.toString().replace(" ", "").replace(":", "");
             System.out.println(dateFile);
-            File screenshot = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
             FileHandler.copy(screenshot, new File(location + dateFile + ".png"));
 
         } catch (Exception e) {
             Assert.fail("ERROR : OCCURE DURING SCREENSHORT");
         }
     }
-    protected static void getTextValue(WebElement element){
+
+    protected static void getTextValue(WebElement element) {
         System.out.println(element.getText());
 
     }
 
-    protected static void test(){
-        System.out.println("Check git by tester 1");
-    }
-
+//    public static void extendReportStart(String location) {
+//        extentReports = new ExtentReports();
+//        file = new File(Location);
+//        ExtentSparkReporter spark Report = new ExtendSparkReport(file);
+//        extentReport.attachReport(sparkReport);
+//        extenrReport.setSystemInfo("OS", System.getProperty("java.version"));
+//    }
+//
+//    public static void extendReportTearDown(String location) {
+//        extendReports.flush();
+//        file = newFile(location);
+//        Destop.getDesktop().browse((file).toURI());
+//    }
+//
+//    public static takeScreenshot() {
+//        TakesScreenshot screenshot = (TakesScreenshot) driver;
+//        String timeStamp = new SimpleDataFormat("yyyymmdd_HHmmss").format(new date());
+//        File scrfile = screenshot.getScreenshotAs()
+//    }
 
 
 }

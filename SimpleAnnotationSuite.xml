@@ -1,0 +1,10 @@
+
+<suite name="SimpleAnnotation" verbose="1" >
+
+    <test name="Test1">
+        <classes>
+            <class name="com.testNGrunner.SimpleAnnotations"/>
+        </classes>
+    </test>
+
+</suite>
